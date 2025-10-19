@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أنيميشن قلب الحب</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marhey:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Marhey', sans-serif;
+            margin: 0;
+            background: #0c0012;
+            overflow: hidden;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        #start-screen {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 200;
+            transition: opacity 0.5s ease-out;
+        }
+
+        #start-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.5rem;
+            font-family: 'Marhey', sans-serif;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff4d4d;
+            animation: pulse 2s infinite;
+            transition: transform 0.2s;
+        }
+
+        #start-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff4d4d; }
+            50% { box-shadow: 0 0 25px #ff4d4d, 0 0 50px #ff4d4d; }
+            100% { box-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff4d4d; }
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .love-container {
+            position: relative;
+            width: 60vmin; 
+            height: 60vmin;
+            max-width: 300px; 
+            max-height: 300px;
+            flex-shrink: 0; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .heart-svg {
+            width: 85%; 
+            height: 85%;
+            position: absolute;
+            overflow: visible; 
+        }
+
+        .heart-outline-path {
+            stroke: #ff4d4d;
+            stroke-width: 0.8;
+            fill: transparent;
+            filter: drop-shadow(0 0 5px #ff4d4d) drop-shadow(0 0 10px #ff4d4d);
+            opacity: 0;
+        }
+        .start-animation .heart-outline-path {
+            animation: fadeIn 1s forwards;
+        }
+        
+        .heart-fill-path {
+            opacity: 0;
+        }
+         .start-animation .heart-fill-path {
+            animation: fadeIn 0.5s forwards 1s; 
+        }
+
+
+        .shine-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            transform: translate(-50%, -50%) translateX(-150%) translateY(-150%) rotate(45deg);
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
+            opacity: 0;
+            z-index: 12;
+        }
+         .start-animation .shine-effect {
+            animation: shine 0.7s ease-out 4s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        @keyframes shine {
+            0% { opacity: 0.6; transform: translate(-50%, -50%) translateX(-150%) translateY(-150%) rotate(45deg); }
+            100% { opacity: 0; transform: translate(-50%, -50%) translateX(150%) translateY(150%) rotate(45deg); }
+        }
+
+       .arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
+            width: 0%;
+            height: 6px;
+            background-color: #f0c43d;
+            border-radius: 3px;
+            box-shadow: 0 0 15px #f0c43d;
+            opacity: 0;
+            z-index: 100;
+            animation: shootArrow 1s ease-in-out 4.5s forwards;
+        }
+        .start-animation .arrow {
+             animation: shootArrow 1s ease-in-out 4.5s forwards;
+        }
+
+      .arrow::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 20px solid #f0c43d;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: -2px;
+            top: -7px;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 20px solid #f0c43d;
+        }
+
+        @keyframes shootArrow {
+            0% {
+                width: 0%;
+                opacity: 1;
+            }
+            100% {
+                width: 140%; 
+                opacity: 1;
+            }
+        }
+
+        .name {
+            color: white;
+            font-size: clamp(1.5rem, 6vw, 2.5rem); 
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            white-space: nowrap; 
+            margin: 3rem 0; 
+        }
+        .start-animation .name {
+             animation: fadeInName 1.5s ease-out 5s forwards;
+        }
+
+        @keyframes fadeInName {
+            to { opacity: 1; }
+        }
+
+.date-text {
+    color: #ddd;
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
+    text-shadow: 0 0 5px #f0c43d;
+    white-space: nowrap;
+    overflow: hidden;
+    border-left: .15em solid transparent;
+    width: 0;
+    margin-top: 0.5rem;
+    direction: rtl;
+    text-align: center;
+}
+
+.start-animation .date-text {
+    animation: typing 2.5s steps(20, end) 6.5s forwards, 
+               blink-caret .75s step-end infinite 6.5s;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 40%; border-left-color: transparent; }
+}
+
+@keyframes blink-caret {
+    from, to { border-left-color: #f0c43d; }
+    50% { border-left-color: transparent; }
+}
+
+@keyframes hide-caret {
+    to { border-left-color: transparent; }
+}
+
+.start-animation .date-text {
+    animation: typing 2.5s steps(20, end) 6.5s forwards, 
+               blink-caret .75s step-end infinite 6.5s,
+               hide-caret 0s linear 3s forwards;
+}
+        
+        #fireworks-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        @media (max-width: 480px) {
+             .arrow {
+                height: 4px;
+            }
+            .arrow::before {
+                height: 16px;
+                width: 3px;
+            }
+            .arrow::after {
+                right: -2px;
+                top: -6px;
+                border-top-width: 8px;
+                border-bottom-width: 8px;
+                border-left-width: 16px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <canvas id="fireworks-canvas"></canvas>
+
+    <div id="start-screen" class="main-container">
+        <button id="start-btn">اضغطى هنا براحة بدون محامى</button>
+    </div>
+
+    <div id="animation-container" class="main-container hidden">
+        <div class="name name-top">Rahma</div>
+        <div class="love-container">
+            <svg class="heart-svg" viewBox="0 0 24 24">
+                <defs>
+                    <linearGradient id="fillGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                        <stop offset="0%" style="stop-color:#b82b2b" />
+                        <stop offset="100%" style="stop-color:#ff4d4d" />
+                    </linearGradient>
+
+                    <clipPath id="wave-clip">
+                        <path>
+                            <animateTransform
+                                class="wave-animation"
+                                attributeName="transform"
+                                type="translate"
+                                from="0 0"
+                                to="0 -25" 
+                                dur="3s"
+                                begin="indefinite"
+                                fill="freeze"
+                            />
+                           <animate
+                                class="wave-animation"
+                                attributeName="d"
+                                dur="1.5s"
+                                begin="indefinite"
+                                repeatCount="indefinite"
+                                values="M -10 24 Q 12 20, 24 24 T 50 24 L 50 50 L -10 50 Z;
+                                        M -10 24 Q 12 28, 24 24 T 50 24 L 50 50 L -10 50 Z;
+                                        M -10 24 Q 12 20, 24 24 T 50 24 L 50 50 L -10 50 Z"
+                            />
+                        </path>
+                    </clipPath>
+                </defs>
+
+                <path class="heart-outline-path" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                
+                <path class="heart-fill-path" fill="url(#fillGradient)" clip-path="url(#wave-clip)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+
+            </svg>
+
+           <div class="shine-effect"></div>
+           <div class="arrow"></div>
+        </div>
+        <div class="name name-bottom">Mohamed</div>
+        <div class="date-text">19/9/2025 الى النهاية</div>
+    </div>
+    
+    <!-- ملف الصوت -->
+    <audio id="background-music" loop src="https://cdn.pixabay.com/download/audio/2022/02/16/audio_29ce069a53.mp3?filename=inspiring-cinematic-ambient-116199.mp3"></audio>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startScreen = document.getElementById('start-screen');
+            const startBtn = document.getElementById('start-btn');
+            const animationContainer = document.getElementById('animation-container');
+            const music = document.getElementById('background-music');
+            const waveAnimations = document.querySelectorAll('.wave-animation');
+
+            startBtn.addEventListener('click', () => {
+                // إخفاء شاشة البدء
+                startScreen.style.opacity = '0';
+                startScreen.style.pointerEvents = 'none';
+
+                // إظهار حاوية الأنيميشن
+                animationContainer.classList.remove('hidden');
+                
+                // إضافة كلاس لبدء كل الأنيميشن معًا
+                document.body.classList.add('start-animation');
+                
+                // بدء أنيميشن الموجة يدويًا
+                waveAnimations.forEach(anim => anim.beginElement());
+
+                // تشغيل الموسيقى
+                music.play().catch(error => {
+                    console.log("Music playback was prevented by the browser. A user interaction is required.");
+                });
+                
+                // بدء الألعاب النارية بعد 5 ثواني
+                setTimeout(() => {
+                    initFireworks();
+                }, 5000);
+            });
+
+            // --- كود الألعاب النارية ---
+            const canvas = document.getElementById('fireworks-canvas');
+            const ctx = canvas.getContext('2d');
+            let fireworks = [];
+            let particles = [];
+            let hue = 120; // Default color
+
+            function setCanvasSize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            function random(min, max) { return Math.random() * (max - min) + min; }
+
+            function Firework(sx, sy, tx, ty) {
+                this.x = sx; this.y = sy;
+                this.sx = sx; this.sy = sy;
+                this.tx = tx; this.ty = ty;
+                this.distanceToTarget = Math.sqrt(Math.pow(tx - sx, 2) + Math.pow(ty - sy, 2));
+                this.distanceTraveled = 0;
+                this.coordinates = []; this.coordinateCount = 3;
+                while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+                this.angle = Math.atan2(ty - sy, tx - sx);
+                this.speed = 2; this.acceleration = 1.05;
+                this.brightness = random(50, 70); this.targetRadius = 1;
+            }
+
+            Firework.prototype.update = function(index) {
+                this.coordinates.pop();
+                this.coordinates.unshift([this.x, this.y]);
+                if (this.targetRadius < 8) { this.targetRadius += 0.3; } else { this.targetRadius = 1; }
+                this.speed *= this.acceleration;
+                let vx = Math.cos(this.angle) * this.speed;
+                let vy = Math.sin(this.angle) * this.speed;
+                this.distanceTraveled = Math.sqrt(Math.pow(this.x - this.sx, 2) + Math.pow(this.y - this.sy, 2));
+                if (this.distanceTraveled >= this.distanceToTarget) {
+                    createParticles(this.tx, this.ty);
+                    fireworks.splice(index, 1);
+                } else { this.x += vx; this.y += vy; }
+            };
+
+            Firework.prototype.draw = function() {
+                ctx.beginPath();
+                ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                ctx.lineTo(this.x, this.y);
+                ctx.strokeStyle = `hsl(${hue}, 100%, ${this.brightness}%)`;
+                ctx.stroke();
+            };
+
+            function Particle(x, y) {
+                this.x = x; this.y = y;
+                this.coordinates = []; this.coordinateCount = 5;
+                while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+                this.angle = random(0, Math.PI * 2);
+                this.speed = random(1, 10);
+                this.friction = 0.95; this.gravity = 1;
+                this.hue = random(hue - 20, hue + 20);
+                this.brightness = random(50, 80);
+                this.alpha = 1; this.decay = random(0.015, 0.03);
+            }
+
+            Particle.prototype.update = function(index) {
+                this.coordinates.pop();
+                this.coordinates.unshift([this.x, this.y]);
+                this.speed *= this.friction;
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed + this.gravity;
+                this.alpha -= this.decay;
+                if (this.alpha <= this.decay) { particles.splice(index, 1); }
+            };
+
+            Particle.prototype.draw = function() {
+                ctx.beginPath();
+                ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                ctx.lineTo(this.x, this.y);
+                ctx.strokeStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${this.alpha})`;
+                ctx.stroke();
+            };
+
+            function createParticles(x, y) {
+                let particleCount = 80;
+                while (particleCount--) { particles.push(new Particle(x, y)); }
+            }
+
+            function loop() {
+                requestAnimationFrame(loop);
+                hue += 0.5;
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.globalCompositeOperation = 'lighter';
+                let i = fireworks.length;
+                while (i--) { fireworks[i].draw(); fireworks[i].update(i); }
+                let j = particles.length;
+                while (j--) { particles[j].draw(); particles[j].update(j); }
+            }
+            
+            function initFireworks() {
+                setCanvasSize();
+                window.addEventListener('resize', setCanvasSize);
+                loop();
+                setInterval(() => {
+                    for(let i = 0; i < 5; i++) {
+                         fireworks.push(new Firework(random(0, canvas.width), canvas.height, random(0, canvas.width), random(0, canvas.height / 2)));
+                    }
+                }, 800);
+            }
+        });
+    </script>
+
+</body>
+</html>
+
