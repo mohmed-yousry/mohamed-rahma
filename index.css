@@ -1,1 +1,244 @@
+        body {
+            font-family: 'Marhey', sans-serif;
+            margin: 0;
+            background: #0c0012;
+            overflow: hidden;
+        }
 
+        .main-container {
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        #start-screen {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 200;
+            transition: opacity 0.5s ease-out;
+        }
+
+        #start-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.5rem;
+            font-family: 'Marhey', sans-serif;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff4d4d;
+            animation: pulse 2s infinite;
+            transition: transform 0.2s;
+        }
+
+        #start-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff4d4d; }
+            50% { box-shadow: 0 0 25px #ff4d4d, 0 0 50px #ff4d4d; }
+            100% { box-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff4d4d; }
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .love-container {
+            position: relative;
+            width: 60vmin; 
+            height: 60vmin;
+            max-width: 300px; 
+            max-height: 300px;
+            flex-shrink: 0; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .heart-svg {
+            width: 85%; 
+            height: 85%;
+            position: absolute;
+            overflow: visible; 
+        }
+
+        .heart-outline-path {
+            stroke: #ff4d4d;
+            stroke-width: 0.8;
+            fill: transparent;
+            filter: drop-shadow(0 0 5px #ff4d4d) drop-shadow(0 0 10px #ff4d4d);
+            opacity: 0;
+        }
+        .start-animation .heart-outline-path {
+            animation: fadeIn 1s forwards;
+        }
+        
+        .heart-fill-path {
+            opacity: 0;
+        }
+         .start-animation .heart-fill-path {
+            animation: fadeIn 0.5s forwards 1s; 
+        }
+
+
+        .shine-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            transform: translate(-50%, -50%) translateX(-150%) translateY(-150%) rotate(45deg);
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
+            opacity: 0;
+            z-index: 12;
+        }
+         .start-animation .shine-effect {
+            animation: shine 0.7s ease-out 4s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        @keyframes shine {
+            0% { opacity: 0.6; transform: translate(-50%, -50%) translateX(-150%) translateY(-150%) rotate(45deg); }
+            100% { opacity: 0; transform: translate(-50%, -50%) translateX(150%) translateY(150%) rotate(45deg); }
+        }
+
+       .arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
+            width: 0%;
+            height: 6px;
+            background-color: #f0c43d;
+            border-radius: 3px;
+            box-shadow: 0 0 15px #f0c43d;
+            opacity: 0;
+            z-index: 100;
+            animation: shootArrow 1s ease-in-out 4.5s forwards;
+        }
+        .start-animation .arrow {
+             animation: shootArrow 1s ease-in-out 4.5s forwards;
+        }
+
+      .arrow::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 20px solid #f0c43d;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: -2px;
+            top: -7px;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 20px solid #f0c43d;
+        }
+
+        @keyframes shootArrow {
+            0% {
+                width: 0%;
+                opacity: 1;
+            }
+            100% {
+                width: 140%; 
+                opacity: 1;
+            }
+        }
+
+        .name {
+            color: white;
+            font-size: clamp(1.5rem, 6vw, 2.5rem); 
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            white-space: nowrap; 
+            margin: 3rem 0; 
+        }
+        .start-animation .name {
+             animation: fadeInName 1.5s ease-out 5s forwards;
+        }
+
+        @keyframes fadeInName {
+            to { opacity: 1; }
+        }
+
+.date-text {
+    color: #ddd;
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
+    text-shadow: 0 0 5px #f0c43d;
+    white-space: nowrap;
+    overflow: hidden;
+    border-left: .15em solid transparent;
+    width: 0;
+    margin-top: 0.5rem;
+    direction: rtl;
+    text-align: center;
+}
+
+.start-animation .date-text {
+    animation: typing 2.5s steps(20, end) 6.5s forwards, 
+               blink-caret .75s step-end infinite 6.5s;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 40%; border-left-color: transparent; }
+}
+
+@keyframes blink-caret {
+    from, to { border-left-color: #f0c43d; }
+    50% { border-left-color: transparent; }
+}
+
+@keyframes hide-caret {
+    to { border-left-color: transparent; }
+}
+
+.start-animation .date-text {
+    animation: typing 2.5s steps(20, end) 6.5s forwards, 
+               blink-caret .75s step-end infinite 6.5s,
+               hide-caret 0s linear 3s forwards;
+}
+        
+        #fireworks-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        @media (max-width: 480px) {
+             .arrow {
+                height: 4px;
+            }
+            .arrow::before {
+                height: 16px;
+                width: 3px;
+            }
+            .arrow::after {
+                right: -2px;
+                top: -6px;
+                border-top-width: 8px;
+                border-bottom-width: 8px;
+                border-left-width: 16px;
+            }
+        }
